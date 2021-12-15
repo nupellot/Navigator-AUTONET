@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <vector>
 #include <string>
+#include "navigator.h"
 using namespace std;
 
 class node {  // Узел.
@@ -72,7 +73,7 @@ int main() {
 	// printNodes(nodes);  // Выводим обнаруженные узлы.
 
 	vector<vector<int>> distances;  // Карта смежности узлов.
-	distances= getDistances(map, nodes);  // Находим все расстояния между узлами.
+	distances = getDistances(map, nodes);  // Находим все расстояния между узлами.
 	printDistances(distances, nodes);  // Выводим найденные маршруты.
 
 
@@ -270,7 +271,13 @@ bool isNameValid(vector<class node>& nodes, char c) {  // Проверка ва�
 }
 
 void printRoutes(vector<vector<class node>>& routes) {
-	cout << "\033[46mОбнаруженные маршруты (" << routes.size() << ")\033[0m:" << endl << "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-" << endl;
+	if (routes.size() != 0) {
+		cout << "\033[46mОбнаруженные маршруты (" << routes.size() << ")\033[0m:" << endl << "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-" << endl;
+	} else if (routes.size() == 0) {
+		cout << "\033[46mМаршрутов не обнаружено ;(\033[0m" << endl;
+		exit(4);
+	}
+
 	for (int i = 0; i < routes.size(); i++) {  // Пока не кончатся маршруты.
 		for (int j = 0; j < routes[i].size(); j++) {  // Пока не кончатся узлы в маршруте.
 			cout << routes[i][j].getName();
@@ -291,6 +298,7 @@ int getDistance(vector<class node>& globalNodes, vector<class node>& localNodes,
 }
 
 void printShortestRoute(vector<vector<class node>>& routes, vector<class node>& globalNodes, vector<vector<int>>& distances) {
+	// if (routes.size() == 0);
 	void printRoute(vector<class node> route);
 	int getDistance(vector<class node>& globalNodes, vector<class node>& localNodes, vector<vector<int>>& distances);
 	int minDistance = getDistance(globalNodes, routes[0], distances);
