@@ -34,7 +34,7 @@ public:
 	int getLength() const {
 		return length;
 	}
-	int getName() const {
+	char getName() const {
 		return name;
 	}
 };
@@ -43,6 +43,10 @@ class Route {  // Маршрут. К примеру, abcd
 private:
 	vector<class Road> roads;  // Дороги, из которых состоит маршрут.
 public:
+	Route () {;}
+	Route (Road road) {
+		roads.emplace_back(road);
+	}
 	int getLength() const {
 		int length = 0;
 		for (int i = 0; i < roads.size(); i++) {
@@ -52,6 +56,9 @@ public:
 	}
 	int getAmountOfRoads() const {
 		return roads.size();
+	}
+	vector<class Road>& getRoads() {
+		return roads;
 	}
 	friend Route operator+(Route& leftRoute, Route& rightRoute);
 };
@@ -81,15 +88,15 @@ vector<class Node> getInitialNodes(vector<vector<char>>& map);
 void printMap(vector<vector<char>>& map);
 
 // Получение матрицы смежности из карты и списка узлов.
-vector<vector<class Road>> getDistances(vector<vector<char>>& map, vector<class Node>& nodes);
+vector<vector<class Route>> getRoads(vector<vector<char>>& map, vector<class Node>& nodes);
 
 // Печать матрицы смежности.
-void printDistances(vector<vector<class Road>>& distances, vector<class Node>& nodes);
+void printRoads(vector<vector<class Route>>& roads, vector<class Node>& nodes);
 
 // Функция печати списка узлов.
 void printNodes(vector<class Node>& nodes);
  
-void getRoutes(vector<class Node>& nodes, vector<vector<int>>& distances, char from, char to, vector<vector<class Node>>& routes, vector<class Node>& tempRoute);
+void getRoutes(vector<class Node>& nodes, vector<vector<int>>& roads, char from, char to, vector<vector<class Node>>& routes, vector<class Node>& tempRoute);
 
 void printRoutes(vector<vector<class Node>>&);
 
@@ -97,4 +104,4 @@ int getDistance(vector<class Node>&, vector<class Nodes>&, vector<vector<int>>&)
 
 void printShortestRoute(vector<vector<class Node>>&, vector<class Nodes>&, vector<vector<int>>&);
 
-void printRoute(vector<class Node>);
+void printRoute(Route route);
